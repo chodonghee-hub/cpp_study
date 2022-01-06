@@ -1,30 +1,26 @@
 ﻿#include <iostream>
 using namespace std;
 
-class SelfRef {
+class SoSimple {
 private:
-	int num;
+	int num1, num2;
 public:
-	SelfRef(int n) : num(n) { cout << "Added" << endl; }
-
-	SelfRef& Adder(int n) {
-		num += n;
-		return *this;
+	SoSimple(int n1, int n2) : num1(n1), num2(n2) { this->ShowSimpleData(); }
+	SoSimple(SoSimple &copy) : num1(copy.num1), num2(copy.num2) {
+		cout << "*** Called SoSimple(SoSImple &copy)" << endl;
+		this->ShowSimpleData();
 	}
-
-	SelfRef& ShowTwoNumber() {
-		cout << num << endl;
-		return *this;
+	void ShowSimpleData() {
+		cout << "*** now object : " << this << endl;
+		cout << "*** num1 num2 : " << num1 << " " << num2 << endl << endl;
 	}
 };
 
 int main(void) {
-	SelfRef obj(3);
-	SelfRef &ref = obj.Adder(2);
+	cout << "생성 및 초기화 직전" << endl;
+	SoSimple s1(15, 30);
 
-	obj.ShowTwoNumber();
-	ref.ShowTwoNumber();
-
-	ref.Adder(1).ShowTwoNumber().Adder(2).ShowTwoNumber();
+	cout << "생성 및 초기화 직후" << endl;
+	SoSimple s2(s1);
 	return 0;
 }
