@@ -1,27 +1,30 @@
 ﻿#include <iostream>
 using namespace std;
 
-class TwoNumber {
+class SelfRef {
 private:
-	int num1, num2;
+	int num;
 public:
+	SelfRef(int n) : num(n) { cout << "Added" << endl; }
 
-	// Initialize 
-	// TwoNumber(int _n1, int _n2) : num1(_n1), num2(_n2) {}
-
-	TwoNumber(int _n1, int _n2) {
-		this->num1 = _n1;
-		this->num2 = _n2;
+	SelfRef& Adder(int n) {
+		num += n;
+		return *this;
 	}
 
-	void ShowTwoNumber() {
-		cout << this->num1 << endl;
-		cout << this->num2 << endl;
+	SelfRef& ShowTwoNumber() {
+		cout << num << endl;
+		return *this;
 	}
 };
 
 int main(void) {
-	TwoNumber two(2, 4);
-	two.ShowTwoNumber();
+	SelfRef obj(3);
+	SelfRef &ref = obj.Adder(2);
+
+	obj.ShowTwoNumber();
+	ref.ShowTwoNumber();
+
+	ref.Adder(1).ShowTwoNumber().Adder(2).ShowTwoNumber();
 	return 0;
 }
